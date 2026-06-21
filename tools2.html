@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة الرسم ومحول العملات العالمية</title>
+    <link rel="stylesheet" href="https://cloudflare.com">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="top-bar"><a href="index.html" style="color: #4361ee; text-decoration: none; font-weight: bold;">← العودة للرئيسية</a></div>
+    
+    <div class="container" style="max-width: 800px; margin: 40px auto; display: grid; gap: 20px;">
+        <!-- محول العملات السريع -->
+        <div class="tool-card">
+            <h3><i class="fa-solid fa-money-bill-transfer"></i> محول العملات التلقائي</h3>
+            <input type="number" id="amount" placeholder="المبلغ بالدولار ($)" oninput="convertCurrency()">
+            <div class="currency-grid">
+                <div class="currency-item">بالدينار العراقي: <span id="iqdResult">0</span> د.ع</div>
+                <div class="currency-item">بالجنيه المصري: <span id="egpResult">0</span> ج.م</div>
+            </div>
+        </div>
+
+        <!-- لوحة الرسم والتوقيع -->
+        <div class="tool-card">
+            <h3><i class="fa-solid fa-pen-ruler"></i> لوحة الرسم والتوقيع الرقمي</h3>
+            <canvas id="paintCanvas" width="300" height="150" style="border: 2px dashed #cbd5e1; border-radius: 10px; background: #fff;"></canvas>
+            <div class="canvas-controls" style="display: flex; gap: 10px; margin-top: 10px;">
+                <button onclick="clearCanvas()" class="btn-danger" style="flex: 1;">مسح</button>
+                <button onclick="downloadCanvas()" class="btn-primary" style="flex: 1;">تحميل الرسمة</button>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
