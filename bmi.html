@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>حاسبة مؤشر كتلة الجسم BMI | أدوات ذكية</title>
+    <link rel="stylesheet" href="https://cloudflare.com">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="top-bar"><a href="index.html" style="color: #4361ee; text-decoration: none; font-weight: bold;">← العودة للرئيسية</a></div>
+    
+    <div class="container" style="max-width: 600px; margin: 40px auto;">
+        <div class="tool-card">
+            <h3><i class="fa-solid fa-heart-pulse"></i> حاسبة مؤشر كتلة الجسم (BMI)</h3>
+            <div class="input-group">
+                <input type="number" id="weight" placeholder="الوزن بالكيلوغرام">
+                <input type="number" id="height" placeholder="الطول بالسنتيمتر">
+            </div>
+            <button onclick="calculateBMI()" class="btn-primary">احسب حالتك الصحية</button>
+            <div id="bmiResult" class="output-box"></div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
