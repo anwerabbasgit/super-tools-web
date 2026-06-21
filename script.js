@@ -126,3 +126,53 @@ document.getElementById('themeToggle').addEventListener('click', () => {
     const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? '' : 'dark';
     document.documentElement.setAttribute('data-theme', theme);
 });
+// ====== 6. أداة مؤقت التركيز والدراسة (Pomodoro Timer) ======
+let countdown;
+let timeLeft = 25 * 60; // 25 دقيقة بالثواني
+let isRunning = false;
+
+function updateTimerDisplay() {
+    const minutes = Math.floor(timeLeft / 60);
+    const seconds = timeLeft % 60;
+    // إضافة صفر على اليسار إذا كانت الأرقام أقل من 10
+    const displayMinutes = minutes < 10 ? '0' + minutes : minutes;
+    const displaySeconds = seconds < 10 ? '0' + seconds : seconds;
+    document.getElementById('timerDisplay').innerText = `${displayMinutes}:${displaySeconds}`;
+}
+
+function startTimer() {
+    if (isRunning) return;
+    isRunning = true;
+    
+    // تبديل الأزرار بصرياً
+    document.getElementById('btnStartTimer').style.display = 'none';
+    document.getElementById('btnPauseTimer').style.display = 'block';
+
+    countdown = setInterval(() => {
+        timeLeft--;
+        updateTimerDisplay();
+
+        if (timeLeft <= 0) {
+            clearInterval(countdown);
+            isRunning = false;
+            alert("🎉 انتهى وقت التركيز! خذ قسطاً من الراحة الآن (5 دقائق).");
+            resetTimer();
+        }
+    }, 1000);
+}
+
+function pauseTimer() {
+    clearInterval(countdown);
+    isRunning = false;
+    document.getElementById('btnStartTimer').style.display = 'block';
+    document.getElementById('btnPauseTimer').style.display = 'none';
+}
+
+function resetTimer() {
+    clearInterval(countdown);
+    isRunning = false;
+    timeLeft = 25 * 60; // إعادة تعيين لـ 25 دقيقة
+    updateTimerDisplay();
+    document.getElementById('btnStartTimer').style.display = 'block';
+    document.getElementById('btnPauseTimer').style.display = 'none';
+}
