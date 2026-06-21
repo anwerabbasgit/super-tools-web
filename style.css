@@ -93,3 +93,24 @@ button {
 .btn-danger { background: var(--danger-color); color: white; }
 .canvas-controls { display: flex; gap: 10px; margin-top: 10px; }
 .canvas-controls button { flex: 1; }
+/* تنسيقات مؤقت التركيز الجديد */
+.timer-display {
+    font-size: 48px;
+    font-family: monospace;
+    font-weight: bold;
+    color: var(--primary-color);
+    background: rgba(67, 97, 238, 0.05);
+    padding: 15px;
+    border-radius: 12px;
+    margin: 20px 0;
+    text-align: center;
+    letter-spacing: 2px;
+    border: 2px dashed var(--primary-color);
+}
+.timer-controls {
+    display: flex;
+    gap: 10px;
+}
+.timer-controls button {
+    flex: 1;
+}
