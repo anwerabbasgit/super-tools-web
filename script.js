@@ -1,260 +1,110 @@
-// 1. نظام تشغيل الساعة الحية تلقائياً
+// ====== 1. نظام تشغيل الساعة الحية تلقائياً ======
 setInterval(() => {
     const now = new Date();
-    document.getElementById('liveClock').innerHTML = `<i class="fa-regular fa-clock"></i> ${now.toLocaleTimeString('ar-EG')}`;
+    const clockEl = document.getElementById('liveClock');
+    if(clockEl) clockEl.innerHTML = `<i class="fa-regular fa-clock"></i> ${now.toLocaleTimeString('ar-EG')}`;
 }, 1000);
 
-// 2. محرك البحث الذكي لتصفية الأدوات
-function searchTools() {
-    const query = document.getElementById('toolSearch').value.toLowerCase();
-    const cards = document.querySelectorAll('.tool-card');
-    
-    cards.forEach(card => {
-        const keywords = card.getAttribute('data-keywords');
-        if (keywords.includes(query)) {
-            card.style.display = "flex";
-        } else {
-            card.style.display = "none";
-        }
+// ====== 2. نظام تغيير الوضع (Dark/Light Mode) ======
+const themeToggle = document.getElementById('themeToggle');
+if(themeToggle) {
+    themeToggle.addEventListener('click', () => {
+        const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? '' : 'dark';
+        document.documentElement.setAttribute('data-theme', theme);
+        themeToggle.innerHTML = theme === 'dark' ? '<i class="fa-solid fa-sun"></i> الوضع الفاتح' : '<i class="fa-solid fa-moon"></i> الوضع الداكن';
     });
 }
 
-// ====== 3. أداة لوحة الرسم الاحترافية المطورة (كمبيوتر + موبايل) ======
-const canvas = document.getElementById('paintCanvas');
-const ctx = canvas.getContext('2d');
-let drawing = false;
-
-// الإعدادات الافتراضية للفرشاة
-let currentBrushColor = '#000000';
-let currentBrushSize = 3;
-
-function initContext() {
-    ctx.lineWidth = currentBrushSize;
-    ctx.lineCap = 'round';
-    ctx.strokeStyle = currentBrushColor;
-}
-
-// تغيير الألوان ديناميكياً
-function changeColor(color) {
-    currentBrushColor = color;
-    // تحديث النقطة النشطة بصرياً
-    document.querySelectorAll('.color-dot').forEach(dot => {
-        dot.classList.remove('active');
-        if(dot.style.backgroundColor === color || dot.getAttribute('style').includes(color)) {
-            dot.classList.add('active');
-        }
-    });
-}
-
-// تغيير الحجم ديناميكياً
-function changeSize(size) {
-    currentBrushSize = size;
-}
-
-// --- أحداث الكمبيوتر (الماوس) ---
-canvas.addEventListener('mousedown', (e) => { drawing = true; initContext(); draw(e); });
-canvas.addEventListener('mouseup', () => { drawing = false; ctx.beginPath(); });
-canvas.addEventListener('mousemove', draw);
-
-// --- أحداث الموبايل (اللمس) ---
-canvas.addEventListener('touchstart', (e) => { 
-    drawing = true; 
-    initContext();
-    draw(e.touches[0]); 
-    e.preventDefault(); 
-}, { passive: false });
-
-canvas.addEventListener('touchend', () => { drawing = false; ctx.beginPath(); });
-canvas.addEventListener('touchmove', (e) => { 
-    draw(e.touches[0]); 
-    e.preventDefault(); 
-}, { passive: false });
-
-function draw(e) {
-    if (!drawing) return;
-    const rect = canvas.getBoundingClientRect();
-    const clientX = e.clientX || e.pageX;
-    const clientY = e.clientY || e.pageY;
-
-    ctx.lineTo(clientX - rect.left, clientY - rect.top);
-    ctx.stroke();
-    ctx.beginPath();
-    ctx.moveTo(clientX - rect.left, clientY - rect.top);
-}
-
-function clearCanvas() { ctx.clearRect(0, 0, canvas.width, canvas.height); }
-function downloadCanvas() {
-    const link = document.createElement('a');
-    link.download = 'my-signature.png';
-    link.href = canvas.toDataURL();
-    link.click();
-}
-
-// 4. بقية دوال الأدوات المستقرة (العملات، النص، الوزن)
+// ====== 3. أداة حساب الـ BMI ======
 function calculateBMI() {
     const w = parseFloat(document.getElementById('weight').value);
     const h = parseFloat(document.getElementById('height').value)/100;
-    if(w && h) document.getElementById('bmiResult').innerText = `مؤشر كتلتك: ${(w/(h*h)).toFixed(1)}`;
+    const resultDiv = document.getElementById('bmiResult');
+    if(w && h && resultDiv) {
+        const bmi = (w/(h*h)).toFixed(1);
+        let status = bmi < 18.5 ? "📉 نحافة" : bmi < 24.9 ? "✅ مثالي" : bmi < 29.9 ? "⚠️ زيادة وزن" : "🚨 سمنة مفرطة";
+        resultDiv.innerText = `مؤشر كتلتك: ${bmi} (${status})`;
+    }
 }
 
+// ====== 4. أداة تحليل النصوص ======
 function analyzeText() {
     const t = document.getElementById('textInput').value;
-    document.getElementById('charCount').innerText = t.replace(/\s/g, "").length;
-    document.getElementById('wordCount').innerText = t.trim() === "" ? 0 : t.trim().split(/\s+/).length;
+    const charEl = document.getElementById('charCount');
+    const wordEl = document.getElementById('wordCount');
+    if(charEl && wordEl) {
+        charEl.innerText = t.replace(/\s/g, "").length;
+        wordEl.innerText = t.trim() === "" ? 0 : t.trim().split(/\s+/).length;
+    }
 }
 
+// ====== 5. أداة توليد ونسخ كلمة المرور ======
 function generatePassword() {
-    const c = "abcdefg123456!@#"; let p = "";
-    for (let i = 0; i < 12; i++) p += c.charAt(Math.floor(Math.random() * c.length));
-    document.getElementById('passwordResult').innerText = p;
+    const c = "abcdefgHIJKLMNOP1234567890!@#$%&*"; let p = "";
+    for (let i = 0; i < 14; i++) p += c.charAt(Math.floor(Math.random() * c.length));
+    const resEl = document.getElementById('passwordResult');
+    if(resEl) resEl.innerText = p;
 }
-
 function copyPassword() {
-    navigator.clipboard.writeText(document.getElementById('passwordResult').innerText);
-    alert("تم النسخ!");
+    const txt = document.getElementById('passwordResult').innerText;
+    if(txt && txt !== "اضغط توليد...") {
+        navigator.clipboard.writeText(txt);
+        alert("📋 تم نسخ كلمة المرور بنجاح!");
+    }
 }
 
+// ====== 6. أداة تحويل العملات السريع ======
 function convertCurrency() {
     const usd = parseFloat(document.getElementById('amount').value);
-    if(usd) {
-        document.getElementById('iqdResult').innerText = (usd * 1310).toLocaleString();
-        document.getElementById('egpResult').innerText = (usd * 48.5).toFixed(2);
+    const iqdEl = document.getElementById('iqdResult');
+    const egpEl = document.getElementById('egpResult');
+    if(usd && iqdEl && egpEl) {
+        iqdEl.innerText = (usd * 1310).toLocaleString();
+        egpEl.innerText = (usd * 48.5).toFixed(2);
     }
 }
 
-document.getElementById('themeToggle').addEventListener('click', () => {
-    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? '' : 'dark';
-    document.documentElement.setAttribute('data-theme', theme);
-});
-// ====== 6. أداة مؤقت التركيز المخصص (Custom Timer) ======
-let countdown;
-let timeLeft;
-let isRunning = false;
-let isPaused = false;
-
-function updateTimerDisplay() {
-    const minutes = Math.floor(timeLeft / 60);
-    const seconds = timeLeft % 60;
-    const displayMinutes = minutes < 10 ? '0' + minutes : minutes;
-    const displaySeconds = seconds < 10 ? '0' + seconds : seconds;
-    document.getElementById('timerDisplay').innerText = `${displayMinutes}:${displaySeconds}`;
+// ====== 7. أداة لوحة الرسم الاحترافية ======
+const canvas = document.getElementById('paintCanvas');
+if(canvas) {
+    const ctx = canvas.getContext('2d');
+    let drawing = false;
+    canvas.addEventListener('mousedown', () => drawing = true);
+    canvas.addEventListener('mouseup', () => { drawing = false; ctx.beginPath(); });
+    canvas.addEventListener('mousemove', (e) => {
+        if (!drawing) return;
+        ctx.lineWidth = 3; ctx.lineCap = 'round'; ctx.strokeStyle = '#4361ee';
+        const r = canvas.getBoundingClientRect();
+        ctx.lineTo(e.clientX - r.left, e.clientY - r.top); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(e.clientX - r.left, e.clientY - r.top);
+    });
 }
-
-function startTimer() {
-    if (isRunning) return;
-
-    // إذا لم يكن المؤقت موقوفاً مؤقتاً، نأخذ القيمة الجديدة من المستخدم
-    if (!isPaused) {
-        const inputMinutes = parseInt(document.getElementById('customMinutes').value);
-        if (!inputMinutes || inputMinutes <= 0) {
-            alert("⚠️ يرجى إدخال عدد دقائق صحيح!");
-            return;
-        }
-        timeLeft = inputMinutes * 60;
-    }
-
-    isRunning = true;
-    isPaused = false;
-    
-    // تبديل الأزرار
-    document.getElementById('btnStartTimer').style.display = 'none';
-    document.getElementById('btnPauseTimer').style.display = 'block';
-
-    countdown = setInterval(() => {
-        timeLeft--;
-        updateTimerDisplay();
-
-        if (timeLeft <= 0) {
-            clearInterval(countdown);
-            isRunning = false;
-            alert("⏰ انتهى الوقت المحدد!");
-            resetTimer();
-        }
-    }, 1000);
+function clearCanvas() { 
+    const cv = document.getElementById('paintCanvas');
+    if(cv) cv.getContext('2d').clearRect(0, 0, cv.width, cv.height); 
 }
-
-function pauseTimer() {
-    clearInterval(countdown);
-    isRunning = false;
-    isPaused = true;
-    document.getElementById('btnStartTimer').style.display = 'block';
-    document.getElementById('btnPauseTimer').style.display = 'none';
-}
-
-function resetTimer() {
-    clearInterval(countdown);
-    isRunning = false;
-    isPaused = false;
-    const inputMinutes = parseInt(document.getElementById('customMinutes').value) || 25;
-    timeLeft = inputMinutes * 60;
-    updateTimerDisplay();
-    document.getElementById('btnStartTimer').style.display = 'block';
-    document.getElementById('btnPauseTimer').style.display = 'none';
-}
-// ====== 7. أداة مولد بطاقات الألعاب والبروفايل (Gamer ID Builder) ======
-function updateGamerCard() {
-    const nameInput = document.getElementById('gamerName').value;
-    const gameSelect = document.getElementById('gameType').value;
-    const cardBox = document.getElementById('idCardBox');
-
-    document.getElementById('cardNameDisplay').innerText = nameInput.trim() === "" ? "YOUR NAME" : nameInput;
-    document.getElementById('cardGameDisplay').innerText = gameSelect;
-
-    if (gameSelect === "PUBG Mobile") {
-        cardBox.style.background = "linear-gradient(135deg, #2b2d42, #8d99ae)";
-    } else if (gameSelect === "Fortnite") {
-        cardBox.style.background = "linear-gradient(135deg, #7209b7, #f72585)";
-    } else if (gameSelect === "Call of Duty") {
-        cardBox.style.background = "linear-gradient(135deg, #111111, #333333)";
-    } else if (gameSelect === "Anime Fan") {
-        cardBox.style.background = "linear-gradient(135deg, #ff4d6d, #ffb3c1)";
+function downloadCanvas() {
+    const cv = document.getElementById('paintCanvas');
+    if(cv) {
+        const lnk = document.createElement('a'); lnk.download = 'signature.png';
+        lnk.href = cv.toDataURL(); lnk.click();
     }
 }
 
-function downloadGamerCard() {
-    const name = document.getElementById('gamerName').value || "Gamer";
-    const canvasCard = document.createElement('canvas');
-    canvasCard.width = 400;
-    canvasCard.height = 220;
-    const ctxCard = canvasCard.getContext('2d');
-
-    const gameSelect = document.getElementById('gameType').value;
-    
-    // كود حماية وتوافقية لتشغيل الألوان على الكمبيوتر والموبايل معاً
-    ctxCard.fillStyle = "#111111"; 
-    if (gameSelect === "PUBG Mobile") { ctxCard.fillStyle = "#2b2d42"; }
-    else if (gameSelect === "Fortnite") { ctxCard.fillStyle = "#7209b7"; }
-    else if (gameSelect === "Anime Fan") { ctxCard.fillStyle = "#ff4d6d"; }
-    
-    ctxCard.fillRect(0, 0, 400, 220);
-
-    // رسم الشريحة والنصوص بشكل متوافق عالمياً
-    ctxCard.fillStyle = "#ffb703";
-    ctxCard.fillRect(30, 30, 45, 30);
-
-    ctxCard.fillStyle = "#ffffff";
-    ctxCard.font = "bold 14px Arial, sans-serif";
-    ctxCard.fillText("GAMER ID", 300, 50);
-
-    ctxCard.font = "bold 24px Arial, sans-serif";
-    ctxCard.fillText(name.toUpperCase(), 30, 110);
-
-    ctxCard.fillStyle = "#a8dadc";
-    ctxCard.font = "16px Arial, sans-serif";
-    ctxCard.fillText(gameSelect, 30, 145);
-
-    ctxCard.fillStyle = "#ffffff";
-    ctxCard.fillRect(30, 165, 150, 25);
-    ctxCard.fillStyle = "#e63946";
-    ctxCard.font = "bold 11px Arial, sans-serif";
-    ctxCard.fillText("STATUS: PRO VERIFIED", 38, 182);
-
-    const link = document.createElement('a');
-    link.download = `${name}-GamerID.png`;
-    link.href = canvasCard.toDataURL('image/png');
-    document.body.appendChild(link); // إضافة السطر البرمجي المفقود لتوافقية الكمبيوتر
-    link.click();
-    document.body.removeChild(link);
+// ====== 8. الأداة الجديدة: مفكرة الملاحظات والمهام الذكية ======
+function loadNotes() {
+    const saved = localStorage.getItem('userNotes');
+    const txtArea = document.getElementById('notesArea');
+    if(saved && txtArea) txtArea.value = saved;
 }
-
-
+function saveNotes() {
+    const txt = document.getElementById('notesArea').value;
+    localStorage.setItem('userNotes', txt);
+    const status = document.getElementById('saveStatus');
+    if(status) {
+        status.innerText = "✅ تم الحفظ تلقائياً في ذاكرة المتصفح آمنة!";
+        setTimeout(() => status.innerText = "", 3000);
+    }
+}
+// تشغيل جلب الملاحظات فور فتح الصفحة
+document.addEventListener('DOMContentLoaded', loadNotes);
