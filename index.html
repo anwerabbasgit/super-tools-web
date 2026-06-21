@@ -3,12 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>بوابة الأدوات البرمجية العالمية | حلول رقمية مجانية</title>
-    <meta name="description" content="منصة متكاملة تقدم أدوات مجانية وشروحات تفصيلية لحساب مؤشر كتلة الجسم، توليد كلمات مرور قوية، تحليل النصوص، وتحويل العملات الفوري بدقة عالية للزوار مجاناً.">
-    
-    <!-- كود جوجل أدسنس الخاص بك -->
+    <title>بوابة الأدوات البرمجية العالمية | الرئيسية</title>
     <script async src="https://googlesyndication.com" crossorigin="anonymous"></script>
-
     <link rel="stylesheet" href="https://cloudflare.com">
     <link rel="stylesheet" href="style.css">
 </head>
@@ -21,92 +17,30 @@
 
     <header class="main-header">
         <h1><i class="fa-solid fa-wand-magic-sparkles"></i> منصة الأدوات الخارقة العالمية</h1>
-        <p>المنصة العربية الأولى للأدوات البرمجية المؤتمتة والمجانية 100%</p>
-        <div class="search-wrapper">
-            <input type="text" id="toolSearch" placeholder="🔍 ابحث عن أداة معينة (مثال: وزن، عملة، رسم)..." oninput="searchTools()">
-        </div>
+        <p>اختر الأداة التي تود استخدامها من القائمة بالأسفل</p>
     </header>
 
-    <!-- قسم المقال الرئيسي الغني جداً لتقرأه عناكب جوجل وتوافق على الموقع فوراً -->
-    <section class="about-section" style="max-width: 1200px; margin: 20px auto; padding: 30px; background: var(--card-bg); border-radius: 15px; color: var(--text-color); line-height: 1.8;">
-        <h2 style="text-align: center; color: #4361ee;">دليلك الشامل لاستخدام الأدوات الرقمية الذكية أونلاين</h2>
-        <p>مرحباً بكم في منصتنا الخدمية المتكاملة. نهدف من خلال هذا الموقع إلى توفير بيئة عمل رقمية مرنة ومجانية تساعد المستخدمين على إنجاز مهامهم اليومية بكفاءة عالية وبأقصى درجات الأمان وحماية الخصوصية. لا نقوم بحفظ أي بيانات يتم إدخالها داخل الحاسبات؛ حيث تتم جميع العمليات برمجياً داخل متصفحك الشخصي تماماً عبر تقنيات جافا سكريبت الحديثة.</p>
-        
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-top: 20px; font-size: 14px;">
-            <div>
-                <h4 style="color: #2ec4b6;"><i class="fa-solid fa-heart-pulse"></i> أهمية مؤشر كتلة الجسم (BMI)</h4>
-                <p>يعتبر مؤشر كتلة الجسم أداة قياسية عالمية معتمدة من قبل منظمة الصحة العالمية لتقييم الوزن الصحي للبالغين. يقوم البرنامج بحساب العلاقة بين الوزن بالطرق البرمجية ومربع الطول بالمتر، ليعطيك مؤشراً واضحاً يساعدك في تنظيم حميتك الغذائية وتجنب مخاطر السمنة والنحافة المفرطة.</p>
-            </div>
-            <div>
-                <h4 style="color: #4361ee;"><i class="fa-solid fa-lock"></i> حماية الحسابات من الاختراق</h4>
-                <p>إن الاعتماد على كلمات مرور تقليدية يعرض حساباتك الشخصية لخطر الاختراق عبر هجمات التخمين. يتيح لك مولد كلمات المرور المطور لدينا دمج الحروف الكبيرة والصغيرة والأرقام والرموز الخاصة العشوائية لبناء سلسلة نصية معقدة يستحيل كسرها، مع توفير خاصية النسخ الفوري السريع لراحة المستخدم.</p>
-            </div>
-            <div>
-                <h4 style="color: #e63946;"><i class="fa-solid fa-file-lines"></i> تحليل النصوص والكتابة الاحترافية</h4>
-                <p>سواء كنت كاتباً، طالباً جاميعاً، أو صانع محتوى، فإن أداة فحص وتحليل الكلمات والحروف تساعدك في ضبط معايير السيو (SEO) ومعرفة الطول الدقيق للنصوص والمقالات أثناء الكتابة الحية بشكل فوري وبدون أي تأخير برمي.</p>
-            </div>
-        </div>
-    </section>
-
-    <div class="container" id="toolsContainer">
-        <!-- 1. الحاسبة الصحية -->
-        <div class="tool-card" data-keywords="وزن طول صحة رجيم bmi">
+    <!-- أزرار التنقل بين الصفحات الجديدة -->
+    <div class="container">
+        <!-- بطاقة حاسبة الوزن -->
+        <div class="tool-card">
             <h3><i class="fa-solid fa-heart-pulse"></i> حاسبة مؤشر كتلة الجسم (BMI)</h3>
-            <div class="input-group">
-                <input type="number" id="weight" placeholder="الوزن بالكيلوغرام">
-                <input type="number" id="height" placeholder="الطول بالسنتيمتر">
-            </div>
-            <button onclick="calculateBMI()" class="btn-primary">احسب حالتك الصحية</button>
-            <div id="bmiResult" class="output-box"></div>
+            <p>أداة علمية متطورة لتقييم الوزن الصحي والرشاقة بناءً على معايير منظمة الصحة العالمية.</p>
+            <a href="bmi.html" class="btn-link">افتح الأداة في صفحة منفصلة ←</a>
         </div>
 
-        <!-- 2. عداد الكلمات الذكي -->
-        <div class="tool-card" data-keywords="نص كلمات حروف كتابة مقال">
+        <!-- بطاقة محلل النصوص -->
+        <div class="tool-card">
             <h3><i class="fa-solid fa-file-lines"></i> محلل ومحرر النصوص الذكي</h3>
-            <textarea id="textInput" placeholder="اكتب أو الصق نصك هنا..." oninput="analyzeText()"></textarea>
-            <div class="stats-grid">
-                <div class="stat-item">الحروف: <span id="charCount">0</span></div>
-                <div class="stat-item">الكلمات: <span id="wordCount">0</span></div>
-            </div>
-        </div>
-
-        <!-- 3. مولد كلمات المرور -->
-        <div class="tool-card" data-keywords="امان كلمة سر حماية اختراق باسورد">
-            <h3><i class="fa-solid fa-lock"></i> مُولد كلمات المرور الآمنة</h3>
-            <button onclick="generatePassword()" class="btn-success">توليد كلمة سر</button>
-            <div class="password-container">
-                <div id="passwordResult" class="output-box password-field">اضغط توليد...</div>
-                <button onclick="copyPassword()" class="btn-copy"><i class="fa-solid fa-copy"></i></button>
-            </div>
-        </div>
-
-        <!-- 4. محول العملات السريع -->
-        <div class="tool-card" data-keywords="فلوس مال عملة دولار دينار جنيه">
-            <h3><i class="fa-solid fa-money-bill-transfer"></i> محول العملات التلقائي</h3>
-            <input type="number" id="amount" placeholder="المبلغ بالدولار ($)" oninput="convertCurrency()">
-            <div class="currency-grid">
-                <div class="currency-item">بالدينار العراقي: <span id="iqdResult">0</span> د.ع</div>
-                <div class="currency-item">بالجنيه المصري: <span id="egpResult">0</span> ج.م</div>
-            </div>
-        </div>
-
-        <!-- 5. لوحة الرسم والتوقيع -->
-        <div class="tool-card" data-keywords="رسم توقيع صورة تحميل الوان">
-            <h3><i class="fa-solid fa-pen-ruler"></i> لوحة الرسم والتوقيع الرقمي</h3>
-            <canvas id="paintCanvas" width="300" height="150"></canvas>
-            <div class="canvas-controls">
-                <button onclick="clearCanvas()" class="btn-danger">مسح</button>
-                <button onclick="downloadCanvas()" class="btn-primary">تحميل الرسمة</button>
-            </div>
+            <p>أداة فورية لحساب عدد الكلمات والحروف بدقة وضبط معايير السيو (SEO) للكتاب والطلاب.</p>
+            <a href="text.html" class="btn-link">افتح الأداة في صفحة منفصلة ←</a>
         </div>
     </div>
 
-    <!-- تذييل يحتوي على الروابط القانونية الإلزامية لجوجل أدسنس -->
     <footer class="main-footer" style="text-align: center; padding: 30px; background: #121212; color: #8d99ae; margin-top: 50px;">
         <p>&copy; 2026 جميع الحقوق محفوظة لمنصتك العالمية الفاخرة.</p>
         <p style="font-size: 14px; margin-top: 15px;">
-            <a href="https://github.io" style="color: #4361ee; text-decoration: none; margin: 0 10px; font-weight: bold;">سياسة الخصوصية</a> | 
-            <a href="https://github.io" style="color: #4361ee; text-decoration: none; margin: 0 10px; font-weight: bold;">شروط الاستخدام</a> | 
+            <a href="privacy.html" style="color: #4361ee; text-decoration: none; margin: 0 10px; font-weight: bold;">سياسة الخصوصية</a> | 
             <a href="mailto:anwer@example.com" style="color: #4361ee; text-decoration: none; margin: 0 10px; font-weight: bold;">اتصل بنا</a>
         </p>
     </footer>
