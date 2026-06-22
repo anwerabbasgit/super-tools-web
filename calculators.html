@@ -9,27 +9,29 @@
 </head>
 <body>
 
-    <!-- شريط التنقل العلوي الاحترافي المشترك المحدث ليشمل الصفحة الجديدة -->
     <nav class="navbar">
         <div class="nav-container">
             <a href="index.html" class="nav-logo"><i class="fa-solid fa-wand-magic-sparkles"></i> بوابة الأدوات</a>
             <ul class="nav-menu">
                 <li><a href="index.html">الرئيسية</a></li>
                 <li><a href="bmi.html">حاسبة الوزن</a></li>
+                <li><a href="health.html">السعرات والماء</a></li>
+                <li><a href="design.html">أدوات التصميم</a></li>
                 <li><a href="text.html">النصوص والأمان</a></li>
-                <li><a href="tools2.html">الرسم والعملات</a></li>
-                <li><a href="notes.html">المفكرة والتوقيت</a></li>
-                <li><a href="calculators.html" class="active">حاسبات منوعة</a></li>
             </ul>
         </div>
     </nav>
 
+    <div class="top-bar">
+        <div id="liveClock" class="live-clock"><i class="fa-regular fa-clock"></i> 00:00:00</div>
+        <button id="themeToggle" class="btn-theme"><i class="fa-solid fa-moon"></i> الوضع الداكن</button>
+    </div>
+
     <div class="container">
-        <!-- 1. أداة حاسبة النسبة المئوية -->
         <div class="tool-card">
             <h3><i class="fa-solid fa-percent"></i> حاسبة النسبة المئوية الذكية</h3>
             <p>احسب النسبة المئوية بسرعة لدرجاتك الدراسية أو خصومات الأرباح التجارية.</p>
-            <div class="input-group" style="display: flex; gap: 10px;">
+            <div style="display: flex; gap: 10px;">
                 <input type="number" id="percentNum" placeholder="النسبة (مثال: 15)">
                 <input type="number" id="totalNum" placeholder="العدد الإجمالي (مثال: 200)">
             </div>
@@ -37,12 +39,11 @@
             <div id="percentResult" class="output-box">ادخل الأرقام لرؤية النتيجة...</div>
         </div>
 
-        <!-- 2. أداة حاسبة العمر التفصيلية -->
         <div class="tool-card">
             <h3><i class="fa-solid fa-calendar-days"></i> حاسبة العمر واليوم بالتفصيل</h3>
             <p>اكتشف عمرك الدقيق بالسنوات والأشهر والأيام واليوم التاريخي الذي ولدت فيه:</p>
-            <input type="date" id="birthDateInput" onchange="calculateAge()" style="font-size: 16px; text-align: center; font-weight: bold;">
-            <div id="ageResult" class="output-box" style="border-right-color: var(--success-color);">اختر تاريخ ميلادك...</div>
+            <input type="date" id="birthDateInput" onchange="calculateAge()">
+            <div id="ageResult" class="output-box">اختر تاريخ ميلادك...</div>
         </div>
     </div>
 
