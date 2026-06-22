@@ -52,6 +52,7 @@ function generatePassword() {
     const resEl = document.getElementById('passwordResult');
     if(resEl) resEl.innerText = p;
 }
+field = document.getElementById('passwordResult');
 function copyPassword() {
     const resEl = document.getElementById('passwordResult');
     if(resEl) {
@@ -122,7 +123,6 @@ function downloadCanvas() {
         }
     }
 }
-
 // ====== 8. مفكرة الملاحظات والمهام الذكية ======
 function loadNotes() {
     const saved = localStorage.getItem('userNotes');
@@ -186,7 +186,7 @@ function calculateAge() {
         let months = now.getMonth() - birthDate.getMonth();
         let days = now.getDate() - birthDate.getDate();
         if (days < 0) { months--; const prevMonth = new Date(now.getFullYear(), now.getMonth(), 0); days += prevMonth.getDate(); }
-        if (months < 0) { years--; months += 12; }
+                if (months < 0) { years--; months += 12; }
         const daysOfWeek = ["الأحد", "الإثنين", "الثلاثاء", "الأربعاء", "الخميس", "الجمعة", "السبت"];
         resultDiv.innerHTML = `عمرك: ${years} سنة، و ${months} شهر، و ${days} يوم. <br> 📅 ولدت يوم: ${daysOfWeek[birthDate.getDay()]}`;
     }
@@ -214,7 +214,7 @@ function generateRandomColor() {
     }
 }
 
-// ====== 14. ميزة نظام البحث الفوري بالواجهة ======
+// ====== 14. mيزة نظام البحث الفوري بالواجهة ======
 function searchTools() {
     const query = document.getElementById('toolSearch').value.toLowerCase();
     const cards = document.querySelectorAll('.tool-card');
@@ -231,3 +231,6 @@ function searchTools() {
 
 // ====== 15. نظام التشغيل الموحد والذكي فور تحميل الصفحة ======
 document.addEventListener('DOMContentLoaded', () => {
+    loadNotes();
+    if(document.getElementById('colorBox')) generateRandomColor();
+});
