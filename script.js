@@ -17,22 +17,29 @@ if(themeToggle) {
 
 // ====== 3. أداة حساب الـ BMI ======
 function calculateBMI() {
-    const w = parseFloat(document.getElementById('weight').value);
-    const h = parseFloat(document.getElementById('height').value)/100;
+    const weightInput = document.getElementById('weight');
+    const heightInput = document.getElementById('height');
     const resultDiv = document.getElementById('bmiResult');
-    if(w && h && resultDiv) {
-        const bmi = (w/(h*h)).toFixed(1);
-        let status = bmi < 18.5 ? "📉 نحافة" : bmi < 24.9 ? "✅ مثالي" : bmi < 29.9 ? "⚠️ زيادة وزن" : "🚨 سمنة مفرطة";
-        resultDiv.innerText = `مؤشر كتلتك: ${bmi} (${status})`;
+    
+    if(weightInput && heightInput && resultDiv) {
+        const w = parseFloat(weightInput.value);
+        const h = parseFloat(heightInput.value)/100;
+        if(w && h) {
+            const bmi = (w/(h*h)).toFixed(1);
+            let status = bmi < 18.5 ? "📉 نحافة" : bmi < 24.9 ? "✅ مثالي" : bmi < 29.9 ? "⚠️ زيادة وزن" : "🚨 سمنة مفرطة";
+            resultDiv.innerText = `مؤشر كتلتك: ${bmi} (${status})`;
+        }
     }
 }
 
 // ====== 4. أداة تحليل النصوص ======
 function analyzeText() {
-    const t = document.getElementById('textInput').value;
+    const textInput = document.getElementById('textInput');
     const charEl = document.getElementById('charCount');
     const wordEl = document.getElementById('wordCount');
-    if(charEl && wordEl) {
+    
+    if(textInput && charEl && wordEl) {
+        const t = textInput.value;
         charEl.innerText = t.replace(/\s/g, "").length;
         wordEl.innerText = t.trim() === "" ? 0 : t.trim().split(/\s+/).length;
     }
@@ -46,25 +53,35 @@ function generatePassword() {
     if(resEl) resEl.innerText = p;
 }
 function copyPassword() {
-    const txt = document.getElementById('passwordResult').innerText;
-    if(txt && txt !== "اضغط توليد...") {
-        navigator.clipboard.writeText(txt);
-        alert("📋 تم نسخ كلمة المرور بنجاح!");
+    const resEl = document.getElementById('passwordResult');
+    if(resEl) {
+        const txt = resEl.innerText;
+        if(txt && txt !== "اضغط توليد...") {
+            navigator.clipboard.writeText(txt);
+            alert("📋 تم نسخ كلمة المرور بنجاح!");
+        }
     }
 }
 
 // ====== 6. أداة تحويل العملات السريع ======
 function convertCurrency() {
-    const usd = parseFloat(document.getElementById('amount').value);
+    const amountInput = document.getElementById('amount');
     const iqdEl = document.getElementById('iqdResult');
     const egpEl = document.getElementById('egpResult');
-    if(usd && iqdEl && egpEl) {
-        iqdEl.innerText = (usd * 1310).toLocaleString();
-        egpEl.innerText = (usd * 48.5).toFixed(2);
+    
+    if(amountInput && iqdEl && egpEl) {
+        const usd = parseFloat(amountInput.value);
+        if(usd) {
+            iqdEl.innerText = (usd * 1310).toLocaleString();
+            egpEl.innerText = (usd * 48.5).toFixed(2);
+        } else {
+            iqdEl.innerText = "0";
+            egpEl.innerText = "0";
+        }
     }
 }
 
-// ====== 7. أداة لوحة الرسم الاحترافية ======
+// ====== 7. أداة لوحة الرسم الاحترافية آمنة التفعيل ======
 const canvas = document.getElementById('paintCanvas');
 if(canvas) {
     const ctx = canvas.getContext('2d');
@@ -98,12 +115,15 @@ function loadNotes() {
     if(saved && txtArea) txtArea.value = saved;
 }
 function saveNotes() {
-    const txt = document.getElementById('notesArea').value;
-    localStorage.setItem('userNotes', txt);
-    const status = document.getElementById('saveStatus');
-    if(status) {
-        status.innerText = "✅ تم الحفظ تلقائياً في ذاكرة المتصفح آمنة!";
-        setTimeout(() => status.innerText = "", 3000);
+    const txtArea = document.getElementById('notesArea');
+    if(txtArea) {
+        const txt = txtArea.value;
+        localStorage.setItem('userNotes', txt);
+        const status = document.getElementById('saveStatus');
+        if(status) {
+            status.innerText = "✅ تم الحفظ تلقائياً في ذاكرة المتصفح الآمنة!";
+            setTimeout(() => status.innerText = "", 3000);
+        }
     }
 }
 // تشغيل جلب الملاحظات فور فتح الصفحة
