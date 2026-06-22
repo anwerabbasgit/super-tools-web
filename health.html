@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>حاسبة السعرات الحرارية والماء | أدوات صحية</title>
+    <link rel="stylesheet" href="https://cloudflare.com">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- شريط التنقل الزجاجي الموحد -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo"><i class="fa-solid fa-wand-magic-sparkles"></i> بوابة الأدوات</a>
+            <ul class="nav-menu">
+                <li><a href="index.html">الرئيسية</a></li>
+                <li><a href="bmi.html">حاسبة الوزن</a></li>
+                <li><a href="health.html" class="active">السعرات والماء</a></li>
+                <li><a href="design.html">أدوات التصميم</a></li>
+                <li><a href="text.html">النصوص والأمان</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container" style="max-width: 600px; margin: 40px auto; display: block;">
+        <div class="tool-card">
+            <h3><i class="fa-solid fa-faucet-drip"></i> حاسبة احتياجك اليومي من السعرات والماء</h3>
+            <p>أدخل وزنك الحالي لتقوم الأداة بحساب كميات المياه والسعرات الحرارية الدقيقة التي يحتاجها جسمك للبناء والنشاط اليومي المستمر:</p>
+            <input type="number" id="healthWeight" placeholder="الوزن الحالي بالكيلوغرام" oninput="calculateCaloriesWater()">
+            <div id="healthResult" class="output-box" style="border-right-color: var(--success-color);">أدخل الوزن لرؤية النتائج...</div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
