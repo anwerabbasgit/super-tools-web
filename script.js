@@ -5,13 +5,32 @@ setInterval(() => {
     if(clockEl) clockEl.innerHTML = `<i class="fa-regular fa-clock"></i> ${now.toLocaleTimeString('ar-EG')}`;
 }, 1000);
 
-// ====== 2. نظام تغيير الوضع (Dark/Light Mode) ======
+// ====== 2. نظام تغيير وحفظ الوضع (Dark/Light Mode) ذكي التثبيت ======
+function applySavedTheme() {
+    const savedTheme = localStorage.getItem('theme');
+    const themeToggle = document.getElementById('themeToggle');
+    if (savedTheme === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        if(themeToggle) themeToggle.innerHTML = '<i class="fa-solid fa-sun"></i> الوضع الفاتح';
+    } else {
+        document.documentElement.removeAttribute('data-theme');
+        if(themeToggle) themeToggle.innerHTML = '<i class="fa-solid fa-moon"></i> الوضع الداكن';
+    }
+}
+
 const themeToggle = document.getElementById('themeToggle');
 if(themeToggle) {
     themeToggle.addEventListener('click', () => {
-        const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? '' : 'dark';
-        document.documentElement.setAttribute('data-theme', theme);
-        themeToggle.innerHTML = theme === 'dark' ? '<i class="fa-solid fa-sun"></i> الوضع الفاتح' : '<i class="fa-solid fa-moon"></i> الوضع الداكن';
+        const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+        if (isDark) {
+            document.documentElement.removeAttribute('data-theme');
+            localStorage.setItem('theme', 'light');
+            themeToggle.innerHTML = '<i class="fa-solid fa-moon"></i> الوضع الداكن';
+        } else {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            localStorage.setItem('theme', 'dark');
+            themeToggle.innerHTML = '<i class="fa-solid fa-sun"></i> الوضع الفاتح';
+        }
     });
 }
 
@@ -20,10 +39,8 @@ function calculateBMI() {
     const weightInput = document.getElementById('weight');
     const heightInput = document.getElementById('height');
     const resultDiv = document.getElementById('bmiResult');
-    
     if(weightInput && heightInput && resultDiv) {
-        const w = parseFloat(weightInput.value);
-        const h = parseFloat(heightInput.value)/100;
+        const w = parseFloat(weightInput.value); const h = parseFloat(heightInput.value)/100;
         if(w && h) {
             const bmi = (w/(h*h)).toFixed(1);
             let status = bmi < 18.5 ? "📉 نحافة" : bmi < 24.9 ? "✅ مثالي" : bmi < 29.9 ? "⚠️ زيادة وزن" : "🚨 سمنة مفرطة";
@@ -37,7 +54,6 @@ function analyzeText() {
     const textInput = document.getElementById('textInput');
     const charEl = document.getElementById('charCount');
     const wordEl = document.getElementById('wordCount');
-    
     if(textInput && charEl && wordEl) {
         const t = textInput.value;
         charEl.innerText = t.replace(/\s/g, "").length;
@@ -52,41 +68,29 @@ function generatePassword() {
     const resEl = document.getElementById('passwordResult');
     if(resEl) resEl.innerText = p;
 }
-field = document.getElementById('passwordResult');
 function copyPassword() {
     const resEl = document.getElementById('passwordResult');
     if(resEl) {
         const txt = resEl.innerText;
-        if(txt && txt !== "اضغط توليد...") {
-            navigator.clipboard.writeText(txt);
-            alert("📋 تم نسخ كلمة المرور بنجاح!");
-        }
+        if(txt && txt !== "اضغط توليد...") { navigator.clipboard.writeText(txt); alert("📋 تم نسخ كلمة المرور بنجاح!"); }
     }
 }
 
 // ====== 6. أداة تحويل العملات السريع ======
 function convertCurrency() {
     const amountInput = document.getElementById('amount');
-    const iqdEl = document.getElementById('iqdResult');
-    const egpEl = document.getElementById('egpResult');
-    
+    const iqdEl = document.getElementById('iqdResult'); const egpEl = document.getElementById('egpResult');
     if(amountInput && iqdEl && egpEl) {
         const usd = parseFloat(amountInput.value);
-        if(usd) {
-            iqdEl.innerText = (usd * 1310).toLocaleString();
-            egpEl.innerText = (usd * 48.5).toFixed(2);
-        } else {
-            iqdEl.innerText = "0";
-            egpEl.innerText = "0";
-        }
+        if(usd) { iqdEl.innerText = (usd * 1310).toLocaleString(); egpEl.innerText = (usd * 48.5).toFixed(2); }
+        else { iqdEl.innerText = "0"; egpEl.innerText = "0"; }
     }
 }
 
 // ====== 7. أداة لوحة الرسم الاحترافية للشاشات واللمس ======
 const canvas = document.getElementById('paintCanvas');
 if(canvas) {
-    const ctx = canvas.getContext('2d');
-    let drawing = false;
+    const ctx = canvas.getContext('2d'); let drawing = false;
     function startDraw() { drawing = true; }
     function endDraw() { drawing = false; ctx.beginPath(); }
     function draw(x, y) {
@@ -96,31 +100,20 @@ if(canvas) {
         ctx.lineTo(x - r.left, y - r.top); ctx.stroke();
         ctx.beginPath(); ctx.moveTo(x - r.left, y - r.top);
     }
-    canvas.addEventListener('mousedown', startDraw);
-    canvas.addEventListener('mouseup', endDraw);
+    canvas.addEventListener('mousedown', startDraw); canvas.addEventListener('mouseup', endDraw);
     canvas.addEventListener('mousemove', (e) => draw(e.clientX, e.clientY));
     canvas.addEventListener('touchstart', (e) => { startDraw(); const t = e.touches[0]; draw(t.clientX, t.clientY); });
     canvas.addEventListener('touchend', endDraw);
     canvas.addEventListener('touchmove', (e) => { e.preventDefault(); const t = e.touches[0]; draw(t.clientX, t.clientY); }, { passive: false });
 }
-function clearCanvas() { 
-    const cv = document.getElementById('paintCanvas');
-    if(cv) cv.getContext('2d').clearRect(0, 0, cv.width, cv.height); 
-}
+function clearCanvas() { const cv = document.getElementById('paintCanvas'); if(cv) cv.getContext('2d').clearRect(0, 0, cv.width, cv.height); }
 function downloadCanvas() {
     const cv = document.getElementById('paintCanvas');
     if(cv) {
         try {
-            const dataUrl = cv.toDataURL('image/png');
-            const lnk = document.createElement('a');
-            lnk.download = 'signature.png';
-            lnk.href = dataUrl;
-            document.body.appendChild(lnk);
-            lnk.click();
-            document.body.removeChild(lnk);
-        } catch (e) {
-            alert("حدث خطأ أثناء تحميل الرسمة، يرجى المحاولة مرة أخرى.");
-        }
+            const dataUrl = cv.toDataURL('image/png'); const lnk = document.createElement('a');
+            lnk.download = 'signature.png'; lnk.href = dataUrl; document.body.appendChild(lnk); lnk.click(); document.body.removeChild(lnk);
+        } catch (e) { alert("حدث خطأ أثناء تحميل الرسمة، يرجى المحاولة مرة أخرى."); }
     }
 }
 // ====== 8. مفكرة الملاحظات والمهام الذكية ======
@@ -186,7 +179,7 @@ function calculateAge() {
         let months = now.getMonth() - birthDate.getMonth();
         let days = now.getDate() - birthDate.getDate();
         if (days < 0) { months--; const prevMonth = new Date(now.getFullYear(), now.getMonth(), 0); days += prevMonth.getDate(); }
-                if (months < 0) { years--; months += 12; }
+        if (months < 0) { years--; months += 12; }
         const daysOfWeek = ["الأحد", "الإثنين", "الثلاثاء", "الأربعاء", "الخميس", "الجمعة", "السبت"];
         resultDiv.innerHTML = `عمرك: ${years} سنة، و ${months} شهر، و ${days} يوم. <br> 📅 ولدت يوم: ${daysOfWeek[birthDate.getDay()]}`;
     }
@@ -214,7 +207,7 @@ function generateRandomColor() {
     }
 }
 
-// ====== 14. mيزة نظام البحث الفوري بالواجهة ======
+// ====== 14. ميزة نظام البحث الفوري بالواجهة ======
 function searchTools() {
     const query = document.getElementById('toolSearch').value.toLowerCase();
     const cards = document.querySelectorAll('.tool-card');
@@ -231,6 +224,6 @@ function searchTools() {
 
 // ====== 15. نظام التشغيل الموحد والذكي فور تحميل الصفحة ======
 document.addEventListener('DOMContentLoaded', () => {
-    loadNotes();
+    applySavedTheme(); // فحص وتثبيت القالب فور تشغيل أي صفحة من الـ DOM
     if(document.getElementById('colorBox')) generateRandomColor();
 });
