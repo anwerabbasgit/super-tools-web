@@ -3,39 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>حاسبة مؤشر كتلة الجسم BMI | أدوات ذكية</title>
+    <title>حاسبة مؤشر كتلة الجسم BMI | بوابة الأدوات</title>
     <link rel="stylesheet" href="https://cloudflare.com">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <!-- شريط التنقل العلوي الاحترافي الجديد المشترك -->
+    <!-- شريط التنقل الزجاجي الموحد -->
     <nav class="navbar">
         <div class="nav-container">
             <a href="index.html" class="nav-logo"><i class="fa-solid fa-wand-magic-sparkles"></i> بوابة الأدوات</a>
             <ul class="nav-menu">
                 <li><a href="index.html">الرئيسية</a></li>
                 <li><a href="bmi.html" class="active">حاسبة الوزن</a></li>
+                <li><a href="health.html">السعرات والماء</a></li>
+                <li><a href="design.html">أدوات التصميم</a></li>
                 <li><a href="text.html">النصوص والأمان</a></li>
-                <li><a href="tools2.html">الرسم والعملات</a></li>
-                <li><a href="notes.html">المفكرة الذكية</a></li>
-                <li><a href="calculators.html">حاسبات منوعة</a></li>
-
             </ul>
         </div>
     </nav>
-    
-    <div class="container" style="max-width: 600px; margin: 40px auto;">
+
+    <div class="container" style="max-width: 600px; margin: 40px auto; display: block;">
         <div class="tool-card">
             <h3><i class="fa-solid fa-heart-pulse"></i> حاسبة مؤشر كتلة الجسم (BMI)</h3>
+            <p>أدخل بيانات طولك ووزنك بدقة لحساب المؤشر الصحي المعتمد لتقييم رشاقتك:</p>
             <div class="input-group">
-                <input type="number" id="weight" placeholder="الوزن بالكيلوغرام">
-                <input type="number" id="height" placeholder="الطول بالسنتيمتر">
+                <input type="number" id="weight" placeholder="الوزن الحالي (بالكيلوغرام)">
+                <input type="number" id="height" placeholder="الطول الحالي (بالسنتيمتر)">
             </div>
-            <button onclick="calculateBMI()" class="btn-primary">احسب حالتك الصحية</button>
-            <div id="bmiResult" class="output-box"></div>
+            <button onclick="calculateBMI()" class="btn-primary" style="margin-top: 15px;">احسب مؤشر الكتلة الفوري</button>
+            <div id="bmiResult" class="output-box">أدخل البيانات واضغط على الحساب...</div>
         </div>
     </div>
+
     <script src="script.js"></script>
 </body>
 </html>
