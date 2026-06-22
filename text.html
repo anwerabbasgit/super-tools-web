@@ -8,7 +8,20 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="top-bar"><a href="index.html" style="color: #4361ee; text-decoration: none; font-weight: bold;">← العودة للرئيسية</a></div>
+
+    <!-- شريط التنقل العلوي الاحترافي الجديد المشترك -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo"><i class="fa-solid fa-wand-magic-sparkles"></i> بوابة الأدوات</a>
+            <ul class="nav-menu">
+                <li><a href="index.html">الرئيسية</a></li>
+                <li><a href="bmi.html">حاسبة الوزن</a></li>
+                <li><a href="text.html" class="active">النصوص والأمان</a></li>
+                <li><a href="tools2.html">الرسم والعملات</a></li>
+                <li><a href="notes.html">المفكرة الذكية</a></li>
+            </ul>
+        </div>
+    </nav>
     
     <div class="container" style="max-width: 800px; margin: 40px auto; display: grid; gap: 20px;">
         <!-- عداد الكلمات الذكي -->
@@ -25,9 +38,9 @@
         <div class="tool-card">
             <h3><i class="fa-solid fa-lock"></i> مُولد كلمات المرور الآمنة</h3>
             <button onclick="generatePassword()" class="btn-success">توليد كلمة سر</button>
-            <div class="password-container">
-                <div id="passwordResult" class="output-box password-field">اضغط توليد...</div>
-                <button onclick="copyPassword()" class="btn-copy"><i class="fa-solid fa-copy"></i></button>
+            <div class="password-container" style="display: flex; gap: 10px; margin-top: 10px;">
+                <div id="passwordResult" class="output-box password-field" style="flex: 1; padding: 12px; background: var(--bg-color); border: 1px solid #ced4da; border-radius: 8px;">اضغط توليد...</div>
+                <button onclick="copyPassword()" class="btn-primary" style="width: auto; padding: 12px 20px;"><i class="fa-solid fa-copy"></i> نسخ</button>
             </div>
         </div>
     </div>
