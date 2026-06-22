@@ -271,12 +271,14 @@ button:hover { filter: brightness(1.05); transform: translateY(-1px); }
     border-top: 1px solid #151f32;
 }
 
-/* توافق الهواتف الذكية المطور للشاشات واللمس */
-@media (max-width: 768px) {
-    .nav-container { flex-direction: column; gap: 15px; text-align: center; }
-    .nav-menu { flex-wrap: wrap; justify-content: center; gap: 6px; }
-    .nav-menu a { padding: 8px 12px; font-size: 13px; }
-    .main-header { padding: 45px 20px; }
-    .main-header h1 { font-size: 28px; }
-    .container { margin: 30px auto; gap: 20px; }
+/* توافق الهواتف الذكية الفائق لـ 7 روابط علوية */
+@media (max-width: 900px) {
+    .navbar { padding: 10px; }
+    .nav-container { flex-direction: column; gap: 8px; text-align: center; }
+    .nav-menu { flex-wrap: wrap; justify-content: center; gap: 4px; width: 100%; }
+    .nav-menu a { padding: 6px 10px; font-size: 11px; border-radius: 6px; }
+    .main-header { padding: 35px 15px; }
+    .main-header h1 { font-size: 24px; }
+    .container { margin: 20px auto; gap: 15px; grid-template-columns: 1fr; }
+    .tool-card { padding: 20px; }
 }
