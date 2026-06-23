@@ -1,11 +1,10 @@
-// ====== 1. نظام تشغيل الساعة الحية تلقائياً ======
+// 1. نظام تشغيل الساعة الحية تلقائياً
 setInterval(() => {
-    const now = new Date();
     const clockEl = document.getElementById('liveClock');
-    if(clockEl) clockEl.innerHTML = `<i class="fa-regular fa-clock"></i> ${now.toLocaleTimeString('ar-EG')}`;
+    if(clockEl) clockEl.innerHTML = `<i class="fa-regular fa-clock"></i> ${new Date().toLocaleTimeString('ar-EG')}`;
 }, 1000);
 
-// ====== 2. نظام تغيير وحفظ الوضع (Dark/Light Mode) ذكي التثبيت ======
+// 2. نظام تغيير وحفظ الوضع (Dark/Light Mode) ذكي التثبيت عبر الأيقونات الدائرية
 function applySavedTheme() {
     const savedTheme = localStorage.getItem('theme');
     const themeToggle = document.getElementById('themeToggle');
@@ -22,187 +21,172 @@ const themeToggle = document.getElementById('themeToggle');
 if(themeToggle) {
     themeToggle.addEventListener('click', () => {
         const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-        if (isDark) {
-            document.documentElement.removeAttribute('data-theme');
-            localStorage.setItem('theme', 'light');
-            themeToggle.innerHTML = '<i class="fa-solid fa-moon"></i>';
-        } else {
-            document.documentElement.setAttribute('data-theme', 'dark');
-            localStorage.setItem('theme', 'dark');
-            themeToggle.innerHTML = '<i class="fa-solid fa-sun"></i>';
-        }
+        document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
+        localStorage.setItem('theme', isDark ? 'light' : 'dark');
+        applySavedTheme();
     });
 }
 
-// ====== 3. أداة حساب الـ BMI ======
+// 3. حاسبة مؤشر كتلة الجسم (BMI)
 function calculateBMI() {
-    const weightInput = document.getElementById('weight');
-    const heightInput = document.getElementById('height');
-    const resultDiv = document.getElementById('bmiResult');
-    if(weightInput && heightInput && resultDiv) {
-        const w = parseFloat(weightInput.value); const h = parseFloat(heightInput.value)/100;
-        if(w && h) {
-            const bmi = (w/(h*h)).toFixed(1);
-            let status = bmi < 18.5 ? "📉 نحافة" : bmi < 24.9 ? "✅ مثالي" : bmi < 29.9 ? "⚠️ زيادة وزن" : "🚨 سمنة مفرطة";
-            resultDiv.innerText = `مؤشر كتلتك: ${bmi} (${status})`;
-        }
+    const w = parseFloat(document.getElementById('weight')?.value);
+    const h = parseFloat(document.getElementById('height')?.value)/100;
+    const res = document.getElementById('bmiResult');
+    if(w && h && res) {
+        const bmi = (w/(h*h)).toFixed(1);
+        let status = bmi < 18.5 ? "📉 نحافة" : bmi < 24.9 ? "✅ مثالي" : bmi < 29.9 ? "⚠️ زيادة وزن" : "🚨 سمنة مفرطة";
+        res.innerText = `مؤشر كتلتك: ${bmi} (${status})`;
     }
 }
 
-// ====== 4. أداة تحليل النصوص ======
+// 4. أداة تحليل النصوص
 function analyzeText() {
-    const textInput = document.getElementById('textInput');
+    const t = document.getElementById('textInput')?.value || "";
     const charEl = document.getElementById('charCount');
     const wordEl = document.getElementById('wordCount');
-    if(textInput && charEl && wordEl) {
-        const t = textInput.value;
+    if(charEl && wordEl) {
         charEl.innerText = t.replace(/\s/g, "").length;
         wordEl.innerText = t.trim() === "" ? 0 : t.trim().split(/\s+/).length;
     }
 }
 
-// ====== 5. أداة توليد ونسخ كلمة المرور ======
+// 5. مولد ونسخ كلمات المرور
 function generatePassword() {
     const c = "abcdefgHIJKLMNOP1234567890!@#$%&*"; let p = "";
     for (let i = 0; i < 14; i++) p += c.charAt(Math.floor(Math.random() * c.length));
-    const resEl = document.getElementById('passwordResult');
-    if(resEl) resEl.innerText = p;
+    const res = document.getElementById('passwordResult');
+    if(res) res.innerText = p;
 }
 function copyPassword() {
-    const resEl = document.getElementById('passwordResult');
-    if(resEl) {
-        const txt = resEl.innerText;
-        if(txt && txt !== "اضغط توليد...") { navigator.clipboard.writeText(txt); alert("📋 تم نسخ كلمة المرور بنجاح!"); }
+    const txt = document.getElementById('passwordResult')?.innerText;
+    if(txt && txt !== "اضغط توليد...") { navigator.clipboard.writeText(txt); alert("📋 تم نسخ كلمة المرور!"); }
+}
+
+// 6. محول العملات الفوري
+function convertCurrency() {
+    const usd = parseFloat(document.getElementById('amount')?.value);
+    const iqd = document.getElementById('iqdResult');
+    const egp = document.getElementById('egpResult');
+    if(usd && iqd && egp) {
+        iqd.innerText = (usd * 1310).toLocaleString();
+        egp.innerText = (usd * 48.5).toFixed(2);
     }
 }
 
-// ====== 6. أداة تحويل العملات السريع ======
-function convertCurrency() {
-    const amountInput = document.getElementById('amount');
-    const iqdEl = document.getElementById('iqdResult'); const egpEl = document.getElementById('egpResult');
-    if(amountInput && iqdEl && egpEl) {
-        const usd = parseFloat(amountInput.value);
-        if(usd) { iqdEl.innerText = (usd * 1310).toLocaleString(); egpEl.innerText = (usd * 48.5).toFixed(2); }
-        else { iqdEl.innerText = "0"; egpEl.innerText = "0"; }
-    }
-}
-// ====== 7. أداة لوحة الرسم الاحترافية للشاشات واللمس ======
+// 7. أداة لوحة الرسم الاحترافية (مصلحة بالكامل للشاشات واللمس)
 const canvas = document.getElementById('paintCanvas');
 if(canvas) {
     const ctx = canvas.getContext('2d'); let drawing = false;
-    function startDraw() { drawing = true; }
-    function endDraw() { drawing = false; ctx.beginPath(); }
-    function getCanvasCoordinates(clientX, clientY) {
-        const rect = canvas.getBoundingClientRect();
-        return { x: (clientX - rect.left) * (canvas.width / rect.width), y: (clientY - rect.top) * (canvas.height / rect.height) };
-    }
-    function draw(clientX, clientY) {
+    const colorInput = document.getElementById('brushColor');
+    const widthInput = document.getElementById('brushWidth');
+
+    const getCoords = (clientX, clientY) => {
+        const r = canvas.getBoundingClientRect();
+        return { x: (clientX - r.left) * (canvas.width / r.width), y: (clientY - r.top) * (canvas.height / r.height) };
+    };
+    const draw = (clientX, clientY) => {
         if (!drawing) return;
-        const colorInput = document.getElementById('brushColor'); const widthInput = document.getElementById('brushWidth');
         ctx.lineWidth = widthInput ? widthInput.value : 3;
         ctx.strokeStyle = colorInput ? colorInput.value : '#4361ee';
-        ctx.lineCap = 'round'; ctx.lineJoin = 'round';
-        const coords = getCanvasCoordinates(clientX, clientY);
-        ctx.lineTo(coords.x, coords.y); ctx.stroke(); ctx.beginPath(); ctx.moveTo(coords.x, coords.y);
-    }
-    canvas.addEventListener('mousedown', startDraw); canvas.addEventListener('mouseup', endDraw);
+        ctx.lineCap = ctx.lineJoin = 'round';
+        const c = getCoords(clientX, clientY);
+        ctx.lineTo(c.x, c.y); ctx.stroke(); ctx.beginPath(); ctx.moveTo(c.x, c.y);
+    };
+
+    canvas.addEventListener('mousedown', () => drawing = true);
+    canvas.addEventListener('mouseup', () => { drawing = false; ctx.beginPath(); });
     canvas.addEventListener('mousemove', (e) => draw(e.clientX, e.clientY));
-    canvas.addEventListener('touchstart', (e) => { startDraw(); const t = e.touches; draw(t.clientX, t.clientY); });
-    canvas.addEventListener('touchend', endDraw);
-    canvas.addEventListener('touchmove', (e) => { e.preventDefault(); const t = e.touches; draw(t.clientX, t.clientY); }, { passive: false });
+    
+    // تصحيح حساسات اللمس الفورية للمبايل عبر مصفوفة اللمس الصالحة [0]
+    canvas.addEventListener('touchstart', (e) => { drawing = true; draw(e.touches[0].clientX, e.touches[0].clientY); });
+    canvas.addEventListener('touchend', () => { drawing = false; ctx.beginPath(); });
+    canvas.addEventListener('touchmove', (e) => { e.preventDefault(); draw(e.touches[0].clientX, e.touches[0].clientY); }, { passive: false });
 }
-function clearCanvas() { const cv = document.getElementById('paintCanvas'); if(cv) cv.getContext('2d').clearRect(0, 0, cv.width, cv.height); }
+function clearCanvas() { canvas && canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height); }
 function downloadCanvas() {
-    const cv = document.getElementById('paintCanvas');
-    if(cv) {
-        try {
-            const dataUrl = cv.toDataURL('image/png'); const lnk = document.createElement('a');
-            lnk.download = 'signature.png'; lnk.href = dataUrl; document.body.appendChild(lnk); lnk.click(); document.body.removeChild(lnk);
-        } catch (e) { alert("حدث خطأ أثناء تحميل الرسمة، يرجى المحاولة مرة أخرى."); }
+    if(canvas) {
+        const lnk = document.createElement('a'); lnk.download = 'signature.png';
+        lnk.href = canvas.toDataURL(); lnk.click();
     }
 }
 
-// ====== 8. مفكرة الملاحظات والمهام الذكية ======
+// 8. مفكرة الملاحظات والمهام
 function loadNotes() {
     const saved = localStorage.getItem('userNotes');
-    const txtArea = document.getElementById('notesArea');
-    if(saved && txtArea) txtArea.value = saved;
+    const txt = document.getElementById('notesArea');
+    if(saved && txt) txt.value = saved;
 }
+// تم اختصار دالة الحفظ للتسريع البرمجي الشامل
 function saveNotes() {
-    const txtArea = document.getElementById('notesArea');
-    if(txtArea) {
-        const txt = txtArea.value; localStorage.setItem('userNotes', txt);
-        const status = document.getElementById('saveStatus');
-        if(status) { status.innerText = "✅ تم الحفظ تلقائياً!"; setTimeout(() => status.innerText = "", 3000); }
+    const txt = document.getElementById('notesArea')?.value;
+    if(txt !== undefined) {
+        localStorage.setItem('userNotes', txt);
+        const st = document.getElementById('saveStatus');
+        if(st) { st.innerText = "✅ تم الحفظ!"; setTimeout(() => st.innerText = "", 2000); }
     }
 }
 
-// ====== 9. محول التوقيت العالمي الفوري ======
+// 9. محول التوقيت العالمي
 function convertGlobalTime() {
-    const timeInput = document.getElementById('localTimeInput'); const resultDiv = document.getElementById('timeZoneResults');
-    if(timeInput && resultDiv) {
-        const timeVal = timeInput.value; if(!timeVal) return;
-        const [hours, minutes] = timeVal.split(':'); const d = new Date(); d.setHours(hours); d.setMinutes(minutes);
-        const fmt = (zone) => d.toLocaleTimeString('ar-EG', { timeZone: zone, hour: '2-digit', minute: '2-digit' });
-        resultDiv.innerHTML = `<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 15px; font-size: 14px;">
-            <div style="padding: 10px; background: var(--bg-color); border-radius: 8px;">🕋 مكة: <b>${fmt('Asia/Riyadh')}</b></div>
-            <div style="padding: 10px; background: var(--bg-color); border-radius: 8px;">🇬🇧 لندن: <b>${fmt('Europe/London')}</b></div>
-            <div style="padding: 10px; background: var(--bg-color); border-radius: 8px;">🇺🇸 نيويورك: <b>${fmt('America/New_York')}</b></div>
-            <div style="padding: 10px; background: var(--bg-color); border-radius: 8px;">🌐 غرينتش: <b>${fmt('UTC')}</b></div>
+    const val = document.getElementById('localTimeInput')?.value;
+    const res = document.getElementById('timeZoneResults');
+    if(val && res) {
+        const [h, m] = val.split(':'); const d = new Date(); d.setHours(h); d.setMinutes(m);
+        const f = (z) => d.toLocaleTimeString('ar-EG', { timeZone: z, hour: '2-digit', minute: '2-digit' });
+        res.innerHTML = `<div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:15px;">
+            <div>🕋 مكة: <b>${f('Asia/Riyadh')}</b></div><div>🇬🇧 لندن: <b>${f('Europe/London')}</b></div>
+            <div>🇺🇸 نيويورك: <b>${f('America/New_York')}</b></div><div>🌐 غرينتش: <b>${f('UTC')}</b></div>
         </div>`;
     }
 }
 
-// ====== 10. حاسبة النسبة المئوية ======
+// 10. حاسبة النسبة المئوية
 function calculatePercentage() {
-    const percentInput = document.getElementById('percentNum'); const totalInput = document.getElementById('totalNum'); const resultDiv = document.getElementById('percentResult');
-    if(percentInput && totalInput && resultDiv) {
-        const p = parseFloat(percentInput.value); const t = parseFloat(totalInput.value);
-        if(!isNaN(p) && !isNaN(t) && t !== 0) { resultDiv.innerText = `${p}% من العدد ${t} هي: ${((p / 100) * t).toFixed(2)}`; }
-    }
+    const p = parseFloat(document.getElementById('percentNum')?.value);
+    const t = parseFloat(document.getElementById('totalNum')?.value);
+    const res = document.getElementById('percentResult');
+    if(!isNaN(p) && !isNaN(t) && res && t!==0) res.innerText = `${p}% من ${t} هي: ${((p/100)*t).toFixed(2)}`;
 }
 
-// ====== 11. حاسبة العمر الدقيق ======
+// 11. حاسبة العمر الدقيق
 function calculateAge() {
-    const birthInput = document.getElementById('birthDateInput'); const resultDiv = document.getElementById('ageResult');
-    if(birthInput && resultDiv) {
-        if(!birthInput.value) return;
-        const birthDate = new Date(birthInput.value); const now = new Date();
-        let years = now.getFullYear() - birthDate.getFullYear(); let months = now.getMonth() - birthDate.getMonth(); let days = now.getDate() - birthDate.getDate();
-        if (days < 0) { months--; const prevMonth = new Date(now.getFullYear(), now.getMonth(), 0); days += prevMonth.getDate(); }
-        if (months < 0) { years--; months += 12; }
-        const daysOfWeek = ["الأحد", "الإثنين", "الثلاثاء", "الأربعاء", "الخميس", "الجمعة", "السبت"];
-        resultDiv.innerHTML = `عمرك: ${years} سنة، و ${months} شهر، و ${days} يوم. <br> 📅 ولدت يوم: ${daysOfWeek[birthDate.getDay()]}`;
+    const val = document.getElementById('birthDateInput')?.value;
+    const res = document.getElementById('ageResult');
+    if(val && res) {
+        const b = new Date(val); const n = new Date();
+        let y = n.getFullYear() - b.getFullYear(); let m = n.getMonth() - b.getMonth(); let d = n.getDate() - b.getDate();
+        if (d < 0) { m--; d += new Date(n.getFullYear(), n.getMonth(), 0).getDate(); }
+        if (m < 0) { y--; m += 12; }
+        res.innerHTML = `عمرك: ${y} سنة، و ${m} شهر، و ${d} يوم. <br> 📅 ولدت يوم: ${["الأحد","الإثنين","الثلاثاء","الأربعاء","الخميس","الجمعة","السبت"][b.getDay()]}`;
     }
 }
 
-// ====== 12. حاسبة السعرات والماء ======
+// 12. حاسبة السعرات والماء
 function calculateCaloriesWater() {
-    const weight = parseFloat(document.getElementById('healthWeight').value); const resultDiv = document.getElementById('healthResult');
-    if(weight && resultDiv) {
-        const water = (weight * 0.035).toFixed(1); const calories = Math.round(weight * 24 * 1.2);
-        resultDiv.innerHTML = `💪 تحتاج يومياً حوالي: <b>${calories} سعرة حرارية</b> <br> 💧 وكمية ماء لا تقل عن: <b>${water} لتر</b>`;
-    }
+    const w = parseFloat(document.getElementById('healthWeight')?.value);
+    const res = document.getElementById('healthResult');
+    if(w && res) res.innerHTML = `💪 السعرات: <b>${Math.round(w*24*1.2)}</b> | 💧 الماء: <b>${(w*0.035).toFixed(1)} لتر</b>`;
 }
 
-// ====== 13. مولد ومحول الألوان العشوائية ======
+// 13. مولد الألوان
 function generateRandomColor() {
-    const randomColor = '#' + Math.floor(Math.random()*16777215).toString(16).padStart(6, '0');
-    const box = document.getElementById('colorBox'); const code = document.getElementById('colorCode');
-    if(box && code) { box.style.backgroundColor = randomColor; code.innerText = `HEX: ${randomColor}`; }
+    const rc = '#' + Math.floor(Math.random()*16777215).toString(16).padStart(6, '0');
+    const box = document.getElementById('colorBox'); const cd = document.getElementById('colorCode');
+    if(box && cd) { box.style.backgroundColor = rc; cd.innerText = `HEX: ${rc}`; }
 }
 
-// ====== 14. ميزة نظام البحث الفوري بالواجهة ======
+// 14. نظام البحث الفوري
 function searchTools() {
-    const query = document.getElementById('toolSearch').value.toLowerCase(); const cards = document.querySelectorAll('.tool-card');
-    cards.forEach(card => {
-        const title = card.querySelector('h3').innerText.toLowerCase(); const desc = card.querySelector('p').innerText.toLowerCase();
-        if(title.includes(query) || desc.includes(query)) { card.style.display = "block"; } else { card.style.display = "none"; }
+    const q = document.getElementById('toolSearch')?.value.toLowerCase() || "";
+    document.querySelectorAll('.tool-card').forEach(c => {
+        const match = c.querySelector('h3').innerText.toLowerCase().includes(q) || c.querySelector('p').innerText.toLowerCase().includes(q);
+        c.style.display = match ? "block" : "none";
     });
 }
 
-// ====== 15. نظام التشغيل الموحد والذكي فور تحميل الصفحة ======
+// 15. التشغيل الذكي الموحد
 document.addEventListener('DOMContentLoaded', () => {
     applySavedTheme();
+    loadNotes();
     if(document.getElementById('colorBox')) generateRandomColor();
 });
