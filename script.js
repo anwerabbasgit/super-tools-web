@@ -5,7 +5,7 @@ setInterval(() => {
     if(clockEl) clockEl.innerHTML = `<i class="fa-regular fa-clock"></i> ${now.toLocaleTimeString('ar-EG')}`;
 }, 1000);
 
-// ====== 2. نظام تغيير وحفظ الوضع (Dark/Light Mode) ذكي التثبيت ======
+// ====== 2. نظام تغيير وحفظ الوضع (Dark/Light Mode) ======
 function applySavedTheme() {
     const savedTheme = localStorage.getItem('theme');
     const themeToggle = document.getElementById('themeToggle');
@@ -86,36 +86,80 @@ function convertCurrency() {
         else { iqdEl.innerText = "0"; egpEl.innerText = "0"; }
     }
 }
-
-// ====== 7. أداة لوحة الرسم الاحترافية للشاشات واللمس ======
+// ====== 7. أداة لوحة الرسم الاحترافية المطورة (معادلة تصحيح الإحداثيات والتحكم) ======
 const canvas = document.getElementById('paintCanvas');
 if(canvas) {
-    const ctx = canvas.getContext('2d'); let drawing = false;
+    const ctx = canvas.getContext('2d');
+    let drawing = false;
+
     function startDraw() { drawing = true; }
     function endDraw() { drawing = false; ctx.beginPath(); }
-    function draw(x, y) {
-        if (!drawing) return;
-        ctx.lineWidth = 3; ctx.lineCap = 'round'; ctx.strokeStyle = '#4361ee';
-        const r = canvas.getBoundingClientRect();
-        ctx.lineTo(x - r.left, y - r.top); ctx.stroke();
-        ctx.beginPath(); ctx.moveTo(x - r.left, y - r.top);
+    
+    // دالة ذكية لحساب الإحداثيات الحقيقية وإلغاء مشكلة الابتعاد (Offset) تماماً
+    function getCanvasCoordinates(clientX, clientY) {
+        const rect = canvas.getBoundingClientRect();
+        // ضرب الإحداثي بنسبة حجم الكامفاس البرمجي مقارنة بحجمه الفعلي المعروض على الشاشة
+        return {
+            x: (clientX - rect.left) * (canvas.width / rect.width),
+            y: (clientY - rect.top) * (canvas.height / rect.height)
+        };
     }
-    canvas.addEventListener('mousedown', startDraw); canvas.addEventListener('mouseup', endDraw);
+
+    function draw(clientX, clientY) {
+        if (!drawing) return;
+        
+        // جلب قيم اللون والحجم من حقول الإدخال الجديدة في الصفحة
+        const colorInput = document.getElementById('brushColor');
+        const widthInput = document.getElementById('brushWidth');
+        
+        ctx.lineWidth = widthInput ? widthInput.value : 3;
+        ctx.strokeStyle = colorInput ? colorInput.value : '#4361ee';
+        ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
+
+        const coords = getCanvasCoordinates(clientX, clientY);
+        ctx.lineTo(coords.x, coords.y);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(coords.x, coords.y);
+    }
+
+    // --- حساسات الماوس للحاسبة ---
+    canvas.addEventListener('mousedown', startDraw);
+    canvas.addEventListener('mouseup', endDraw);
     canvas.addEventListener('mousemove', (e) => draw(e.clientX, e.clientY));
-    canvas.addEventListener('touchstart', (e) => { startDraw(); const t = e.touches[0]; draw(t.clientX, t.clientY); });
+
+    // --- حساسات اللمس الفورية للموبايل ---
+    canvas.addEventListener('touchstart', (e) => {
+        startDraw();
+        const touch = e.touches[0];
+        draw(touch.clientX, touch.clientY);
+    });
     canvas.addEventListener('touchend', endDraw);
-    canvas.addEventListener('touchmove', (e) => { e.preventDefault(); const t = e.touches[0]; draw(t.clientX, t.clientY); }, { passive: false });
+    canvas.addEventListener('touchmove', (e) => {
+        e.preventDefault(); // منع الشاشة من الاهتزاز أو النزول أثناء الرسم بالإصبع
+        const touch = e.touches[0];
+        draw(touch.clientX, touch.clientY);
+    }, { passive: false });
 }
-function clearCanvas() { const cv = document.getElementById('paintCanvas'); if(cv) cv.getContext('2d').clearRect(0, 0, cv.width, cv.height); }
+
+function clearCanvas() { 
+    const cv = document.getElementById('paintCanvas'); 
+    if(cv) cv.getContext('2d').clearRect(0, 0, cv.width, cv.height); 
+}
+
 function downloadCanvas() {
     const cv = document.getElementById('paintCanvas');
     if(cv) {
         try {
-            const dataUrl = cv.toDataURL('image/png'); const lnk = document.createElement('a');
-            lnk.download = 'signature.png'; lnk.href = dataUrl; document.body.appendChild(lnk); lnk.click(); document.body.removeChild(lnk);
+            const dataUrl = cv.toDataURL('image/png');
+            const lnk = document.createElement('a');
+            lnk.download = 'signature.png'; lnk.href = dataUrl;
+            document.body.appendChild(lnk); lnk.click(); document.body.removeChild(lnk);
         } catch (e) { alert("حدث خطأ أثناء تحميل الرسمة، يرجى المحاولة مرة أخرى."); }
     }
 }
+
 // ====== 8. مفكرة الملاحظات والمهام الذكية ======
 function loadNotes() {
     const saved = localStorage.getItem('userNotes');
@@ -224,6 +268,6 @@ function searchTools() {
 
 // ====== 15. نظام التشغيل الموحد والذكي فور تحميل الصفحة ======
 document.addEventListener('DOMContentLoaded', () => {
-    applySavedTheme(); // فحص وتثبيت القالب فور تشغيل أي صفحة من الـ DOM
+    applySavedTheme();
     if(document.getElementById('colorBox')) generateRandomColor();
 });
