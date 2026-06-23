@@ -48,12 +48,22 @@
             </div>
         </div>
 
-        <!-- لوحة الرسم العريضة والأصلية -->
+        <!-- لوحة الرسم المطورة بدعم الألوان وحجم الخط وتصحيح المسافة -->
         <div class="tool-card">
             <h3><i class="fa-solid fa-pen-nib"></i> لوحة الرسم والتوقيع الرقمي</h3>
             <p>استخدم إصبعك على المبايل أو الماوس على الكمبيوتر لتوقيع مستنداتك وتحميلها كصورة PNG شفافة فوراً:</p>
+            
+            <!-- أدوات التحكم الفاخرة باللون والسمك -->
+            <div style="display: flex; gap: 15px; align-items: center; justify-content: center; margin-bottom: 15px; background: rgba(0,0,0,0.02); padding: 10px; border-radius: 12px;">
+                <label style="font-weight: bold; font-size: 14px;">🎨 اللون:</label>
+                <input type="color" id="brushColor" value="#4361ee" style="width: 45px; height: 35px; padding: 0; cursor: pointer; border: none; background: none; margin: 0;">
+                
+                <label style="font-weight: bold; font-size: 14px; margin-right: 10px;">📏 الحجم:</label>
+                <input type="range" id="brushWidth" min="1" max="15" value="3" style="width: 100px; margin: 0; cursor: pointer;">
+            </div>
+
             <div style="text-align: center; margin: 15px 0;">
-                <canvas id="paintCanvas" width="500" height="250" style="border: 2px dashed var(--primary-color); border-radius: 12px; background: #fff; cursor: crosshair; max-width: 100%; box-shadow: inset 0 0 10px rgba(0,0,0,0.02);"></canvas>
+                <canvas id="paintCanvas" width="500" height="300" style="border: 2px dashed var(--primary-color); border-radius: 12px; background: #fff; cursor: crosshair; max-width: 100%; box-shadow: inset 0 0 10px rgba(0,0,0,0.02);"></canvas>
             </div>
             <div class="canvas-controls" style="display: flex; gap: 15px;">
                 <button onclick="clearCanvas()" class="btn-danger" style="flex: 1;">مسح اللوحة</button>
