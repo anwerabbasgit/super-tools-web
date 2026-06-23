@@ -113,30 +113,36 @@ body {
     border-radius: 30px;
 }
 
-/* تحويل زر الوضع الداكن إلى أيقونة دائرية زجاجية فاخرة */
+/* تصميم زر الوضع الداكن كدائرة زجاجية فاخرة يتغير لونها نهاراً وليلاً */
 .btn-theme {
-    background: var(--card-bg);
-    border: 1px solid var(--border-color);
+    background-color: rgba(67, 97, 238, 0.08); /* لون أزرق خفيف جداً في النهار */
+    border: 1px solid rgba(67, 97, 238, 0.15);
     color: var(--primary-color);
-    width: 45px;
-    height: 45px;
-    border-radius: 50%; /* شكل دائري كامل */
+    width: 46px;
+    height: 46px;
+    border-radius: 50%; /* دائرة مثالية */
     cursor: pointer;
     box-shadow: var(--shadow);
-    display: flex;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
-    font-size: 18px; /* حجم الأيقونة */
+    font-size: 20px; /* تكبير حجم الأيقونة لتملأ الدائرة بوضوح */
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     padding: 0;
     margin: 0;
 }
 
 .btn-theme:hover {
-    transform: rotate(45deg) scale(1.08); /* تأثير حركي ممتع عند تمرير الماوس أو اللمس */
-    border-color: var(--primary-color);
-    background-color: rgba(67, 97, 238, 0.05);
+    transform: scale(1.08) rotate(15deg); /* حركة التفاف خفيفة عند اللمس لتوضيح التفاعل */
 }
+
+/* التنسيق البصري الخارق عند تفعيل الوضع الليلي (الداكن) */
+[data-theme="dark"] .btn-theme {
+    color: #f59e0b; /* أيقونة شمس ذهبية مشعة */
+    background-color: rgba(245, 158, 11, 0.1); /* خلفية برتقالية دافئة خفيفة ترمز للغروب */
+    border-color: rgba(245, 158, 11, 0.25);
+}
+
 
 [data-theme="dark"] .btn-theme {
     color: #f59e0b; /* تحويل لون الشمس إلى الذهبي الدافئ في الوضع الداكن */
