@@ -282,3 +282,50 @@ button:hover { filter: brightness(1.05); transform: translateY(-1px); }
     .container { margin: 20px auto; gap: 15px; grid-template-columns: 1fr; }
     .tool-card { padding: 20px; }
 }
+/* --- نظام القائمة المنسدلة الاحترافي الجديد --- */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0; /* يبدأ النزول من جهة اليمين ليناسب التصفح العربي */
+    background-color: var(--card-bg);
+    min-width: 200px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    padding: 8px 0;
+    z-index: 1005;
+}
+
+.dropdown-content a {
+    color: var(--text-color) !important;
+    padding: 10px 20px;
+    text-decoration: none;
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 0 !important;
+    background: none !important;
+    text-align: right;
+    transition: background 0.2s, color 0.2s;
+}
+
+.dropdown-content a:hover {
+    background-color: rgba(67, 97, 238, 0.08) !important;
+    color: var(--primary-color) !important;
+}
+
+/* فتح القائمة عند تمرير الماوس أو اللمس */
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* سهم صغير بجانب كلمة الأدوات لإعلام الزائر وجود لستة */
+.dropdown-btn::after {
+    content: " ▾";
+    font-size: 12px;
+}
