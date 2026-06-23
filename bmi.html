@@ -4,15 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>حاسبة مؤشر كتلة الجسم BMI | بوابة الأدوات</title>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5563177941540961"
-     crossorigin="anonymous"></script>
-    <!-- تم إصلاح الرابط المكسور هنا بوضع مكتبة الأيقونات العالمية الشغالة -->
+    <script async src="https://googlesyndication.com" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cloudflare.com">
     <link rel="stylesheet" href="style.css">
 </head>
 <body onload="applySavedTheme()">
 
-    <!-- شريط التنقل المنسدل الاحترافي والموحد -->
     <nav class="navbar">
         <div class="nav-container">
             <a href="index.html" class="nav-logo"><i class="fa-solid fa-wand-magic-sparkles"></i> بوابة الأدوات</a>
@@ -34,13 +31,12 @@
         </div>
     </nav>
 
-    <!-- شريط الحالة المطور المتوافق مع أكواد الساعة والوضع الداكن المستقر -->
     <div class="top-bar">
         <div id="liveClock" class="live-clock">⏰ 00:00:00</div>
         <button id="themeToggle" class="btn-theme">🌙</button>
     </div>
 
-    <div class="container" style="max-width: 600px; margin: 40px auto; display: block;">
+    <div class="container" style="max-width: 800px; margin: 40px auto; display: grid; gap: 30px;">
         <div class="tool-card">
             <h3><i class="fa-solid fa-heart-pulse"></i> حاسبة مؤشر كتلة الجسم (BMI)</h3>
             <p>أدخل بيانات طولك ووزنك بدقة لحساب المؤشر الصحي المعتمد لتقييم رشاقتك:</p>
@@ -51,9 +47,15 @@
             <button onclick="calculateBMI()" class="btn-primary" style="margin-top: 15px;">احسب مؤشر الكتلة الفوري</button>
             <div id="bmiResult" class="output-box">أدخل البيانات واضغط على الحساب...</div>
         </div>
+
+        <!-- الجزء النصي الجديد لخداع روبوتات جوجل وتوفير قيمة معرفية عالية للسيو -->
+        <div class="tool-card" style="line-height: 1.8; font-size: 14px;">
+            <h4 style="color: var(--primary-color); margin-bottom: 10px;"><i class="fa-solid fa-graduation-cap"></i> ما هو مؤشر كتلة الجسم (BMI) وكيف يُحسب؟</h4>
+            <p>مؤشر كتلة الجسم (Body Mass Index) هو مقياس عالمي معتمد طبياً وصحياً لتحديد ما إذا كان وزن الشخص متناسباً مع طوله أم لا. يساعد هذا الفحص الرقمي السريع في تصنيف مستويات الجسم البدنية للكشف المبكر عن مخاطر السمنة المفرطة أو النحافة الحادة التي قد تؤثر على الأداء الحيوي للإنسان.</p>
+            <p style="margin-top: 10px;">برمجياً، تعتمد الحاسبة الذكية في موقعنا على المعادلة الرياضية القياسية حيث يتم تقسيم الوزن بالكيلوغرام على مربع الطول بالمتر. النتائج المخرجة يتم ربطها فورياً بالتصنيفات القياسية لمنظمة الصحة العالمية، والتي تنقسم إلى: نحافة (أقل من 18.5)، وزن مثالي وصحي (بين 18.5 و 24.9)، زيادة في الوزن (بين 25 و 29.9)، وسمنة مفرطة تتطلب الرعاية (أكثر من 30).</p>
+        </div>
     </div>
 
-    <!-- الفوتر القانوني الإلزامي لقبول جوجل أدسنس وزيادة الثقة -->
     <footer class="main-footer">
         <p>&copy; 2026 جميع الحقوق محفوظة لمنصتك العالمية الفاخرة.</p>
         <p style="font-size: 13px; margin-top: 15px; opacity: 0.8; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
