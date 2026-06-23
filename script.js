@@ -4,16 +4,18 @@ setInterval(() => {
     if(clockEl) clockEl.innerHTML = `<i class="fa-regular fa-clock"></i> ${new Date().toLocaleTimeString('ar-EG')}`;
 }, 1000);
 
-// 2. نظام تغيير وحفظ الوضع (Dark/Light Mode) ذكي التثبيت عبر الأيقونات الدائرية
+// 2. نظام تغيير وحفظ الوضع (Dark/Light Mode) ذكي التثبيت عبر الأيقونات التوافقية المضمونة
 function applySavedTheme() {
     const savedTheme = localStorage.getItem('theme');
     const themeToggle = document.getElementById('themeToggle');
     if (savedTheme === 'dark') {
         document.documentElement.setAttribute('data-theme', 'dark');
+        // استخدام الوسم التوافقي الأكثر استقراراً للأيقونات لضمان ظهور رمز الشمس
         if(themeToggle) themeToggle.innerHTML = '<i class="fa-solid fa-sun"></i>';
     } else {
         document.documentElement.removeAttribute('data-theme');
-        if(themeToggle) themeToggle.innerHTML = '<i class="fa-solid fa-moon"></i>';
+        // استخدام الوسم التوافقي الأكثر استقراراً للأيقونات لضمان ظهور رمز القمر
+        if(themeToggle) themeToggle.innerHTML = '<i class="fa-regular fa-moon"></i>';
     }
 }
 
@@ -26,6 +28,7 @@ if(themeToggle) {
         applySavedTheme();
     });
 }
+
 
 // 3. حاسبة مؤشر كتلة الجسم (BMI)
 function calculateBMI() {
